@@ -40,5 +40,52 @@ namespace BusTicketReservation
             goster("sehirler"); // Sayfa yüklenirken fonksiyonu çağırdık ve tablo ismini yolladık.
             ddLtNereye.Width = 100;
         }
+        protected void btnltsefer_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("sayfa2.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text); // '&' sembolü taşınan verileri birbirinden ayırmaktadır.
+        }
+
+        public void seferleriYenile(string secim)
+        {
+            if (secim != " ")
+            {
+                cmd.CommandText = "Select * from sehirler where id<>'" + secim + "'";
+                cmd.Connection = con;
+                con.Open();
+                dr = cmd.ExecuteReader();
+                ddLtNereye.Items.Clear();
+                ddLtNereye.Items.Add(" ");
+                ddLtNereye.DataSource = dr;
+                ddLtNereye.DataTextField = "sehir";
+                ddLtNereye.DataValueField = "id";
+                ddLtNereye.DataBind();
+                con.Close();
+            }
+        }
+        protected void ddLtNereden_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                seferleriYenile(ddLtNereden.SelectedItem.Value.ToString());
+                con.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter("select distinct S2.id,S2.sehir from seferler INNER JOIN dbo.sehirler S1 ON dbo.seferler.Nereden = S1.id INNER JOIN  dbo.sehirler S2 ON dbo.seferler.Nereye = S2.id where S1.id  like '%" + ddLtNereden.SelectedItem.Value.ToString() + "%'", con);
+                DataTable tbl = new DataTable();
+                ddLtNereye.Items.Clear();
+                adapter.Fill(tbl);
+                ddLtNereye.DataSource = tbl;
+                ddLtNereye.DataTextField = "sehir";
+                ddLtNereye.DataValueField = "id";
+                ddLtNereye.DataBind();
+                ddLtNereye.SelectedItem.Value = "";
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+
+                return;
+            }
+        }
     }
 }
