@@ -87,5 +87,38 @@ namespace BusTicketReservation
                 return;
             }
         }
+        protected void btnSeferListele_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if ((ddLtNereden.SelectedValue == "--Seçiniz--") && (ddLtNereye.SelectedValue == "--Seçiniz--"))
+                {
+                    lblUyari.Text = "Lütfen kalkış ve varış yerini seçiniz...";
+
+                }
+                else if (ddLtNereden.SelectedValue == "--Seçiniz--")
+                {
+                    lblUyari.Text = "Lütfen kalkış yeri seçiniz...";
+                }
+                else if (ddLtNereye.SelectedValue == "")
+                {
+                    lblUyari.Text = "Lütfen varış yeri seçiniz...";
+                }
+
+
+
+                else
+                {
+
+                    Response.Redirect("sayfa2.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write(ex.Message);
+            }
+
+
+        }
     }
 }
