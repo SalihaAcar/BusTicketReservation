@@ -110,7 +110,7 @@ namespace BusTicketReservation
                 else
                 {
 
-                    Response.Redirect("sayfa2.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text);
+                    Response.Redirect("seferler.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text);
                 }
             }
             catch (Exception ex)
@@ -118,6 +118,10 @@ namespace BusTicketReservation
                 Response.Write(ex.Message);
             }
 
+
+        }
+        protected void ddLtNereye_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
