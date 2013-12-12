@@ -19,7 +19,28 @@ namespace BusTicketReservation
 
        protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT SeferNo, Kalkis ,Varis,convert(varchar,convert(datetime,Tarih,103)) [Saat],Fiyat,SeferTip,OtobusTip FROM seferliste  WHERE Nereden=@Kalkis AND Nereye=@Varis AND   CAST(FLOOR(CAST(Tarih AS FLOAT)) AS DATETIME)=@Tarih ORDER BY Tarih ASC", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd); // Uygulama ile Veritabanı arasında ki köprü. Bağlantıyı otomatik açıp kapar.
+                // QueryString sayfalar arası veri taşınmasını sağlar. Diğer sayfadan veriyi istedik.
+                lblTarih.Text = Request.QueryString["Tarih"] + " TARİHİNDEKİ SEFERLERİMİZ ";
+                string[] trh = Request.QueryString["Tarih"].Split(' ');
+                string[] tarih = trh[0].Split('.');
+                cmd.Parameters.AddWithValue("@Kalkis", Request.QueryString["Nereden"]);
+                cmd.Parameters.AddWithValue("@Varis", Request.QueryString["Nereye"]);
+                cmd.Parameters.AddWithValue("@Tarih", tarih[1] + "-" + tarih[0] + "-" + tarih[2]);
+                //ds.Tables.Add(table); //DataSet içerisine Tablo ekliyorum
+                da.Fill(table); // Adaptör'ün çalıştırdığı sql sorgusunun getirdiği sonuçlar table'a doldurulur.
+                GridView1.DataSource = sadeceSaat(table); // Alınan bilgileri gridview'ın içine attık,
+                GridView1.DataBind(); //  DataBind ile gridview'a bağladık, verileri topladık ve ekrana yazdırdık.
 
+            }
+            catch (Exception ex)
+            {
+                string temp = ex.Message;
+                Response.Redirect("<script lang='Javascript'>alert('Hata !')</script>");
+            }
         }
 
 
