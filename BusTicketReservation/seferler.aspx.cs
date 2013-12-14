@@ -43,7 +43,14 @@ namespace BusTicketReservation
             }
         }
 
-
+       protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+       {
+           Session.Add("sefertip", GridView1.SelectedRow.Cells[4].Text);
+           Session.Add("otobustip", GridView1.SelectedRow.Cells[5].Text);
+           Session.Add("fiyat", GridView1.SelectedRow.Cells[3].Text);
+           Session.Add("SeferNo", GridView1.SelectedRow.Cells[0].Text);
+           Response.Redirect("koltuksecim.aspx?SeferNo=" + GridView1.SelectedRow.Cells[0].Text);
+       }
         public DataTable sadeceSaat(DataTable tbdateTime)
         {
             for (int i = 0; i < tbdateTime.Rows.Count; i++)
