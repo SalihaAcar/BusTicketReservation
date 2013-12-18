@@ -76,7 +76,43 @@ namespace BusTicketReservation
 
                 }
             }
-        
+        if (con.State == ConnectionState.Closed)
+                    con.Open();
+                SqlCommand komut = new SqlCommand("SELECT koltukno, cinsiyet FROM yolcubilgi WHERE SeferNo=@SeferNo", con);
+                komut.Parameters.AddWithValue("@SeferNo", Session["SeferNo"].ToString());
+                SqlDataAdapter dta = new SqlDataAdapter();
+                dta.SelectCommand = komut;
+                DataTable dttt = new DataTable();
+                dta.Fill(dttt);
+                if (dttt.Rows.Count > 0)
+                {
+                    
+                        if (lblSeferTip.Text == "Rahat")
+                        {
+                            if (dttt.Rows[0]["cinsiyet"].ToString() == "Bay")
+                            {
+                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bay-koltuk.png";
+                            }
+                            else
+                            {
+                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bayan-koltuk.png";
+                            }
+                        }
+                        if (lblSeferTip.Text == "Normal")
+                        {
+                            if (dttt.Rows[0]["cinsiyet"].ToString() == "Bay")
+                            {
+                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bay-koltuk.png";
+                            }
+                            else
+                            {
+                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bayan-koltuk.png" ;
+                            }
+                        }
+
+                    }
+           
+            
 
         }
     }
