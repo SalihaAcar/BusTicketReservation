@@ -76,44 +76,69 @@ namespace BusTicketReservation
 
                 }
             }
-        if (con.State == ConnectionState.Closed)
-                    con.Open();
-                SqlCommand komut = new SqlCommand("SELECT koltukno, cinsiyet FROM yolcubilgi WHERE SeferNo=@SeferNo", con);
-                komut.Parameters.AddWithValue("@SeferNo", Session["SeferNo"].ToString());
-                SqlDataAdapter dta = new SqlDataAdapter();
-                dta.SelectCommand = komut;
-                DataTable dttt = new DataTable();
-                dta.Fill(dttt);
-                if (dttt.Rows.Count > 0)
+            if (con.State == ConnectionState.Closed)
+                con.Open();
+            SqlCommand komut = new SqlCommand("SELECT koltukno, cinsiyet FROM yolcubilgi WHERE SeferNo=@SeferNo", con);
+            komut.Parameters.AddWithValue("@SeferNo", Session["SeferNo"].ToString());
+            SqlDataAdapter dta = new SqlDataAdapter();
+            dta.SelectCommand = komut;
+            DataTable dttt = new DataTable();
+            dta.Fill(dttt);
+            if (dttt.Rows.Count > 0)
+            {
+
+                if (lblSeferTip.Text == "Rahat")
                 {
-                    
-                        if (lblSeferTip.Text == "Rahat")
-                        {
-                            if (dttt.Rows[0]["cinsiyet"].ToString() == "Bay")
-                            {
-                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bay-koltuk.png";
-                            }
-                            else
-                            {
-                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bayan-koltuk.png";
-                            }
-                        }
-                        if (lblSeferTip.Text == "Normal")
-                        {
-                            if (dttt.Rows[0]["cinsiyet"].ToString() == "Bay")
-                            {
-                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bay-koltuk.png";
-                            }
-                            else
-                            {
-                                ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bayan-koltuk.png" ;
-                            }
-                        }
-
+                    if (dttt.Rows[0]["cinsiyet"].ToString() == "Bay")
+                    {
+                        ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bay-koltuk.png";
                     }
-           
-            
+                    else
+                    {
+                        ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bayan-koltuk.png";
+                    }
+                }
+                if (lblSeferTip.Text == "Normal")
+                {
+                    if (dttt.Rows[0]["cinsiyet"].ToString() == "Bay")
+                    {
+                        ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bay-koltuk.png";
+                    }
+                    else
+                    {
+                        ((ImageButton)Page.FindControl("rahat" + dttt.Rows[0]["koltukno"].ToString())).ImageUrl = "~images/bayan-koltuk.png";
+                    }
+                }
 
+            }
+        }
+            protected void ddlCinsiyet_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PnlComfortlessBus.Visible == true)
+            {
+                if (ddlCinsiyet1.SelectedValue == "Bay")
+                    ((ImageButton)Page.FindControl("normal" + lblKoltukNo1.Text)).ImageUrl = "~/images/bay-koltuk.png";
+                else if (ddlCinsiyet1.SelectedValue == "Bayan")
+                    ((ImageButton)Page.FindControl("normal" + lblKoltukNo1.Text)).ImageUrl = "~/images/bayan-koltuk.png";
+            }
+            else if (PnlComfortableBus.Visible == true)
+            {
+                if (ddlCinsiyet1.SelectedValue == "Bay")
+                    ((ImageButton)Page.FindControl("rahat" + lblKoltukNo1.Text)).ImageUrl = "~/images/bay-koltuk.png";
+                else if (ddlCinsiyet1.SelectedValue == "Bayan")
+                    ((ImageButton)Page.FindControl("rahat" + lblKoltukNo1.Text)).ImageUrl = "~/images/bayan-koltuk.png";
+            }
+        }
+
+        protected void btnIptal_Click(object sender, EventArgs e)
+        {
+            if (PnlComfortlessBus.Visible==true)
+                ((ImageButton)Page.FindControl("normal" + lblKoltukNo1.Text)).ImageUrl = "~/images/ykoltuk.png";
+            else ((ImageButton)Page.FindControl("rahat" + lblKoltukNo1.Text)).ImageUrl = "~/images/ykoltuk.png";
+            pnlBirinciYolcu.Visible = false;
+            pnlIkinciYolcu.Visible = false;
+        }
+
+            
         }
     }
-}

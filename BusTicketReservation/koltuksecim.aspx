@@ -8,13 +8,15 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:Panel ID="panelyolcu" runat="server" Visible="False">
+        <asp:Panel ID="PnlComfortableBus" runat="server" Visible="false"></asp:Panel>
+        <asp:Panel ID="PnlComfortlessBus" runat="server" Visible="false"></asp:Panel>
+         <asp:Panel ID="panelyolcu" runat="server" Visible="False">
             <asp:Panel ID="pnlBilgi" runat="server" BackColor="#FFFF99" Height="56px" Width="937px">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Label ID="Label35" runat="server" BorderColor="Gray" Font-Bold="True" Font-Italic="False" Font-Names="Times New Roman" ForeColor="Black" style="margin-left:0px; margin-right:0px " Text="YOLCU BİLGİLERİ "></asp:Label>
                     <br />
                     <br />
-                    <asp:Label ID="Label28" runat="server" Font-Bold="True" Text="Kalkış :"></asp:Label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label28" runat="server" Font-Bold="True" Text="Kalkış :"></asp:Label>
                 &nbsp;<asp:Label ID="lblKalkis" runat="server"></asp:Label>
                 &nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label29" runat="server" Font-Bold="True" Text="Varış :"></asp:Label>
                 &nbsp;<asp:Label ID="lblVaris" runat="server"></asp:Label>
@@ -41,6 +43,7 @@
                 &nbsp;<asp:TextBox ID="txtTel1" runat="server" Height="18px" Width="80px"></asp:TextBox>
                 &nbsp;<asp:Label ID="Label33" runat="server" Font-Bold="False" Font-Size="Small" Text="Koltuk No:"></asp:Label>
                 <asp:Label ID="lblKoltukNo1" runat="server" Font-Size="Small" Width="25px"></asp:Label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:ImageButton ID="imgKapat1" runat="server" ImageUrl="~/images/kapat_buton.png" OnClick="imgKapat1_Click" style="height: 15px" />
             </asp:Panel>
             <asp:Panel ID="pnlIkinciYolcu" runat="server" BackColor="#FFFF99" Height="58px" Visible="False" Width="937px">
