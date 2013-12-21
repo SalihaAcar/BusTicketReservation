@@ -112,6 +112,51 @@ namespace BusTicketReservation
 
             }
         }
+        protected void btnAnaSayfa_Click(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("anasayfa.aspx");
+        }
+
+        protected void btnGeri_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("seferler.aspx");
+        }
+
+        protected void btnSatinAl_Click(object sender, EventArgs e)
+        {
+
+            SqlCommand cmd = new SqlCommand("insert into yolcular(tc, SeferNo,Ad,Soyad,Tel, cinsiyet,koltukno)values(@tc, @SeferNo,@Ad,@Soyad,@Tel,@cinsiyet,@koltukno)", con);
+            string k = lblKoltukNo1.Text;
+            int koltuk = Convert.ToInt16(k);
+
+            if (con.State == ConnectionState.Closed)
+                con.Open();
+            if (PnlComfortlessBus.Visible == true)
+            {
+                if (pnlBirinciYolcu.Visible == true)
+                {
+                    if (txtAd1.Text.Length > 0 && txtSoyad1.Text.Length > 0 && txtTcNo1.Text.Length > 0 && txtTel1.Text.Length > 0)
+                    {
+                        cmd.Parameters.AddWithValue("@tc", txtTcNo1.Text);
+                        cmd.Parameters.AddWithValue("@SeferNo", Request.QueryString["SeferNo"]);
+                        cmd.Parameters.AddWithValue("@Ad", txtAd1.Text);
+                        cmd.Parameters.AddWithValue("@Soyad", txtSoyad1.Text);
+                        string cinsiyet = "";
+                        if (ddlCinsiyet1.SelectedValue == "Bay")
+                            cinsiyet = "Bay";
+                        if (ddlCinsiyet1.SelectedValue == "Bayan")
+                            cinsiyet = "Bayan";
+                        cmd.Parameters.AddWithValue("@Tel", txtTel1.Text.ToString());
+                        cmd.Parameters.AddWithValue("@cinsiyet", cinsiyet);
+                        cmd.Parameters.AddWithValue("@koltukno", lblKoltukNo1.Text.ToString());
+                        cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                        con.Close();
+
+                    }
+                }
+            }
+        }
             protected void ddlCinsiyet_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PnlComfortlessBus.Visible == true)
