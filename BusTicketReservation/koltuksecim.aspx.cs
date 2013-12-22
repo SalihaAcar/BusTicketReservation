@@ -183,7 +183,17 @@ namespace BusTicketReservation
             pnlBirinciYolcu.Visible = false;
             pnlIkinciYolcu.Visible = false;
         }
+        
+        protected void imgKapat1_Click(object sender, ImageClickEventArgs e)
+        {
 
+            pnlBirinciYolcu.Visible = false;
+        }
+
+        protected void imgKapat2_Click(object sender, ImageClickEventArgs e)
+        {
+            pnlIkinciYolcu.Visible = false;
+        }
             
         }
     }
