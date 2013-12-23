@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sonadim.aspx.cs" Inherits="otobus_otomasyon.sonadim" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sonadim.aspx.cs" Inherits="BusTicketReservation.sonadim" %>
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="asp" %>
 

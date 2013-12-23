@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace BusTicketReservation
 {
@@ -17,13 +17,12 @@ namespace BusTicketReservation
         DataSet ds = new DataSet(); // Birden fazla tablo tutar.
         DataTable table = new DataTable(); // Bir tane tablo tutar.
 
-       protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand("SELECT SeferNo, Kalkis ,Varis,convert(varchar,convert(datetime,Tarih,103)) [Saat],Fiyat,SeferTip,OtobusTip FROM seferliste  WHERE Nereden=@Kalkis AND Nereye=@Varis AND   CAST(FLOOR(CAST(Tarih AS FLOAT)) AS DATETIME)=@Tarih ORDER BY Tarih ASC", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd); // Uygulama ile Veritabanı arasında ki köprü. Bağlantıyı otomatik açıp kapar.
-                // QueryString sayfalar arası veri taşınmasını sağlar. Diğer sayfadan veriyi istedik.
                 lblTarih.Text = Request.QueryString["Tarih"] + " TARİHİNDEKİ SEFERLERİMİZ ";
                 string[] trh = Request.QueryString["Tarih"].Split(' ');
                 string[] tarih = trh[0].Split('.');
@@ -32,25 +31,28 @@ namespace BusTicketReservation
                 cmd.Parameters.AddWithValue("@Tarih", tarih[1] + "-" + tarih[0] + "-" + tarih[2]);
                 //ds.Tables.Add(table); //DataSet içerisine Tablo ekliyorum
                 da.Fill(table); // Adaptör'ün çalıştırdığı sql sorgusunun getirdiği sonuçlar table'a doldurulur.
-                GridView1.DataSource = sadeceSaat(table); // Alınan bilgileri gridview'ın içine attık,
-                GridView1.DataBind(); //  DataBind ile gridview'a bağladık, verileri topladık ve ekrana yazdırdık.
-
+                if (table.Rows.Count == 0)
+                {
+                    lblTarih.Text = Request.QueryString["Tarih"] + " TARİHİNDE " + Session["Nereden"].ToString() + "-" + Session["Nereye"].ToString() + " SEFERİMİZ YOKTUR.";
+                    btnAnaSayfa.Visible = true;
+                    lblAnaSayfa.Visible = true;
+                }
+                else
+                {
+                    GridView1.DataSource = sadeceSaat(table); // Alınan bilgileri gridview'ın içine attık,
+                    GridView1.DataBind(); //  DataBind ile gridview'a bağladık, verileri topladık ve ekrana yazdırdık.
+                }
             }
             catch (Exception ex)
             {
                 string temp = ex.Message;
                 Response.Redirect("<script lang='Javascript'>alert('Hata !')</script>");
             }
+
         }
 
-       protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-       {
-           Session.Add("sefertip", GridView1.SelectedRow.Cells[4].Text);
-           Session.Add("otobustip", GridView1.SelectedRow.Cells[5].Text);
-           Session.Add("fiyat", GridView1.SelectedRow.Cells[3].Text);
-           Session.Add("SeferNo", GridView1.SelectedRow.Cells[0].Text);
-           Response.Redirect("koltuksecim.aspx?SeferNo=" + GridView1.SelectedRow.Cells[0].Text);
-       }
+
+
         public DataTable sadeceSaat(DataTable tbdateTime)
         {
             for (int i = 0; i < tbdateTime.Rows.Count; i++)
@@ -61,6 +63,19 @@ namespace BusTicketReservation
             }
             return tbdateTime;
         }
-        
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session.Add("sefertip", GridView1.SelectedRow.Cells[4].Text);
+            Session.Add("otobustip", GridView1.SelectedRow.Cells[5].Text);
+            Session.Add("fiyat", GridView1.SelectedRow.Cells[3].Text);
+            Session.Add("SeferNo", GridView1.SelectedRow.Cells[0].Text);
+            Response.Redirect("koltuksecim.aspx?SeferNo=" + GridView1.SelectedRow.Cells[0].Text);
+        }
+
+        protected void btnAnaSayfa_Click(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("anasayfa.aspx");
+        }
     }
 }
+

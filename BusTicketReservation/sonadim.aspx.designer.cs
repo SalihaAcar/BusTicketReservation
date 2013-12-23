@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace otobus_otomasyon {
+namespace BusTicketReservation {
     
     
     public partial class sonadim {

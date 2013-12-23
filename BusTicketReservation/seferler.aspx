@@ -1,62 +1,65 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="seferler.aspx.cs" Inherits="BusTicketReservation.seferler" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true"  CodeBehind="seferler.aspx.cs" Inherits="BusTicketReservation.seferler"   %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
+<head id="Head1" runat="server">
+    <title>Online Otobüs Bileti Sorgulama Sistemi</title>
 </head>
 <body>
-    <form id="form2" runat="server">
-        <center>
-            <div style="background-image: url('http://localhost:49219/images/italya-otobus.jpg'); background-size: contain; background-repeat: no-repeat; height: 384px; width: 596px;">
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-            </div>
-        </center>
-        <center>
-            <asp:Label ID="lblTarih" runat="server" Font-Bold="True"></asp:Label>
-        </center>
-        <br />
-        <center>
-            <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False" BackColor="Turquoise" CellPadding="4" EnableSortingAndPagingCallbacks="True" forecolor="White" GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-left: 0px" Width="632px">
-                <Columns>
-                    <asp:BoundField DataField="SeferNo" HeaderText="Sefer No" ReadOnly="true" SortExpression="Kalkis" />
-                    <asp:BoundField DataField="Kalkis" HeaderText="Kalkış" ReadOnly="true" SortExpression="Kalkis" />
-                    <asp:BoundField DataField="Varis" HeaderText="Varış" ReadOnly="true" SortExpression="Varis" />
-                    <asp:BoundField DataField="Saat" HeaderText="Saat" ReadOnly="true" SortExpression="Tarih" />
-                    <asp:BoundField DataField="Fiyat" DataFormatString="{0:c}" HeaderText="Fiyat" ReadOnly="true" SortExpression="Fiyat" />
-                    <asp:BoundField DataField="SeferTip" HeaderText="Sefer Tipi" ReadOnly="true" SortExpression="SeferTip" />
-                    <asp:BoundField DataField="OtobusTip" HeaderText="Otobüs Tipi" ReadOnly="true" SortExpression="OtobusTip" />
-                    <asp:ButtonField CommandName="Select" Text="Koltuk Seç" />
-                </Columns>
-            </asp:GridView>
-        </center>
-        </p>
-        <p>
-        </p>
-        <p>
-        </p>
-        <p>
-        </p>
-        <center>
-            <p style="position: inherit; margin:auto;">
-                Designed by Saliha ACAR
-            </p>
-        </center>
-    </form>
     <form id="form1" runat="server">
-    <div>
-    
-    </div>
+        <center> 
+        <div style="background-image:url('images/italya-otobus.jpg');background-size:contain; background-repeat:no-repeat; height: 384px; width:596px;" >
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+        </center>
+        <center> 
+        <asp:Label ID="lblTarih" runat="server" Font-Bold="True"></asp:Label> </center>
+        <br />
+            <center> 
+            <asp:GridView ID="GridView1" runat="server" CellPadding="4" forecolor="White" BackColor="Turquoise" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" GridLines="None"  style="margin-left: 0px" Width="632px" AutoGenerateColumns="False" AllowSorting="True" EnableSortingAndPagingCallbacks="True">
+                <Columns>
+                    <asp:BoundField SortExpression="Kalkis" ReadOnly="true" DataField="SeferNo" HeaderText="Sefer No" /> 
+                    <asp:BoundField SortExpression="Kalkis" ReadOnly="true" DataField="Kalkis" HeaderText="Kalkış" />
+                    <asp:BoundField SortExpression="Varis" ReadOnly="true" DataField="Varis" HeaderText="Varış" />
+                    <asp:BoundField SortExpression="Tarih" ReadOnly="true" DataField="Saat" HeaderText="Saat" />
+                    <asp:BoundField SortExpression="Fiyat" ReadOnly="true" DataField="Fiyat" HeaderText="Fiyat" DataFormatString="{0:c}"/>
+                    <asp:BoundField SortExpression="SeferTip" ReadOnly="true" DataField="SeferTip" HeaderText="Sefer Tipi" />
+                    <asp:BoundField SortExpression="OtobusTip" ReadOnly="true" DataField="OtobusTip" HeaderText="Otobüs Tipi" />
+                    <asp:ButtonField Text="Koltuk Seç" CommandName="Select" />
+                </Columns>
+           
+            </asp:GridView> 
+                </center>
+        <center> 
+        </center>
+        </p>
+        <p>
+        </p>
+        <p>
+        </p>
+        <p>
+            <center> 
+                <asp:ImageButton ID="btnAnaSayfa" visible="false" runat="server" ImageUrl="~/resimler/anasayfa.png" OnClick="btnAnaSayfa_Click" /> &nbsp;<asp:Label ID="lblAnaSayfa" runat="server" Text="Anasayfaya Dön" Visible="False"></asp:Label>
+            </center>
+        </p>
+        <center> 
+        <p style="position: inherit; margin:auto;">&nbsp;</p>
+            <p style="position: inherit; margin:auto;">&nbsp;</p>
+            <p style="position: inherit; margin:auto;">&nbsp;</p>
+            <p style="position: inherit; margin:auto;">&nbsp;</p>
+            <p style="position: inherit; margin:auto;">Designed by Saliha ACAR
+        </p>
+        </center>
     </form>
 </body>
 </html>

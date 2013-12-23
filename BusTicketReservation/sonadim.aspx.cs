@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
-namespace otobus_otomasyon
+namespace BusTicketReservation
 {
     public partial class sonadim : System.Web.UI.Page
     {

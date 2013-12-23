@@ -21,10 +21,9 @@ namespace BusTicketReservation
         {
             if (!this.IsPostBack) // Sayfa ilk defa yükleniyorsa Page_Load'da formun hepsini doldur.
             {
-                txbTarih.Text = DateTime.Today.ToShortDateString();
+                txbTarih.Text = "--Seçiniz--";
                 cmd.CommandText = "Select * from " + tablo;
                 cmd.Connection = con; // Komut text'i ile bağlantı kurduk.
-
                 con.Open(); // Bağlantıyı açtık.
                 dr = cmd.ExecuteReader();
                 ddLtNereden.DataSource = dr;
@@ -35,15 +34,20 @@ namespace BusTicketReservation
 
             }
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+
             goster("sehirler"); // Sayfa yüklenirken fonksiyonu çağırdık ve tablo ismini yolladık.
             ddLtNereye.Width = 100;
+
+
         }
+
         protected void btnltsefer_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("sayfa2.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text); // '&' sembolü taşınan verileri birbirinden ayırmaktadır.
+            Response.Redirect("seferler.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text); // '&' sembolü taşınan verileri birbirinden ayırmaktadır.
         }
 
         public void seferleriYenile(string secim)
@@ -77,7 +81,6 @@ namespace BusTicketReservation
                 ddLtNereye.DataTextField = "sehir";
                 ddLtNereye.DataValueField = "id";
                 ddLtNereye.DataBind();
-                ddLtNereye.SelectedItem.Value = "";
                 con.Close();
 
             }
@@ -86,12 +89,14 @@ namespace BusTicketReservation
 
                 return;
             }
+            ddLtNereye.Items.Add("--Seçiniz--");
+            ddLtNereye.SelectedValue = "--Seçiniz--";
         }
         protected void btnSeferListele_Click(object sender, EventArgs e)
         {
             try
             {
-                if ((ddLtNereden.SelectedValue == "--Seçiniz--") && (ddLtNereye.SelectedValue == "--Seçiniz--"))
+                if (ddLtNereden.SelectedValue == "--Seçiniz--" && ddLtNereye.SelectedValue == "--Seçiniz--")
                 {
                     lblUyari.Text = "Lütfen kalkış ve varış yerini seçiniz...";
 
@@ -100,16 +105,20 @@ namespace BusTicketReservation
                 {
                     lblUyari.Text = "Lütfen kalkış yeri seçiniz...";
                 }
-                else if (ddLtNereye.SelectedValue == "")
+                else if (ddLtNereye.SelectedValue == "--Seçiniz--")
                 {
                     lblUyari.Text = "Lütfen varış yeri seçiniz...";
                 }
-
-
-
+                else if (txbTarih.Text == "--Seçiniz--")
+                {
+                    lblUyari.Text = "Lütfen tarih seçiniz...";
+                }
                 else
                 {
 
+                    Session.Add("Nereden", ddLtNereden.SelectedItem.ToString());
+                    Session.Add("Nereye", ddLtNereye.SelectedItem.ToString());
+                    Session.Add("Tarih", txbTarih.Text.ToString());
                     Response.Redirect("seferler.aspx?Nereden=" + ddLtNereden.SelectedValue.ToString() + "&Nereye=" + ddLtNereye.SelectedValue.ToString() + "&Tarih=" + txbTarih.Text);
                 }
             }
@@ -117,12 +126,9 @@ namespace BusTicketReservation
             {
                 Response.Write(ex.Message);
             }
-
-
         }
-        protected void ddLtNereye_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
+
     }
+
 }
